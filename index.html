@@ -7,10 +7,15 @@
 
 <style>
   :root {
-    --bg-color: #111;
-    --header-bg: #000;
+    --bg-color: #0d0d0d;
+    --header-bg: #050505;
     --accent-color: #ffcc00;
-    --ticker-speed: 30s; /* מהירות הגלילה - ככל שהמספר קטן יותר זה מהיר יותר */
+    --danger-color: #ff2a2a;
+    --ticker-speed: 30s;
+  }
+
+  * {
+    box-sizing: border-box;
   }
 
   body {
@@ -23,74 +28,129 @@
 
   /* כותרת עליונה */
   .header {
-    height: 90px;
+    height: 110px;
     background: var(--header-bg);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
-    border-bottom: 2px solid #333;
-    box-sizing: border-box;
+    padding: 0 28px;
+    border-bottom: 2px solid #222;
     gap: 20px;
   }
 
-  .logo img {
-    height: 50px;
-    object-fit: contain;
-  }
-
-  .title {
-    font-size: 26px;
-    font-weight: bold;
-    flex: 1;
-    text-align: center;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
-
-  .countdown-box {
+  .brand {
+    min-width: 190px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-width: 270px;
-    padding: 8px 16px;
-    border: 1px solid #333;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.04);
   }
 
-  .countdown-label {
-    font-size: 15px;
-    color: #ddd;
-    margin-bottom: 4px;
+  .logo-text {
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 14px rgba(255,255,255,0.12);
+  }
+
+  .brand-sub {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #bcbcbc;
+  }
+
+  .center-zone {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .deadline-frame {
+    min-width: 440px;
+    padding: 14px 28px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 70, 70, 0.45);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+      linear-gradient(135deg, rgba(90,0,0,0.42), rgba(0,0,0,0.70));
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 18px rgba(255,0,0,0.18),
+      0 12px 32px rgba(0,0,0,0.45);
+    position: relative;
+    overflow: hidden;
+    animation: framePulse 1.5s infinite alternate;
+  }
+
+  .deadline-frame::before {
+    content: "";
+    position: absolute;
+    right: -30%;
+    bottom: 0;
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--danger-color), transparent);
+    animation: sweep 1.7s linear infinite;
+  }
+
+  .deadline-frame.urgent {
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 28px rgba(255,0,0,0.30),
+      0 12px 38px rgba(0,0,0,0.55);
+  }
+
+  .deadline-frame.danger {
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 34px rgba(255,0,0,0.42),
+      0 0 70px rgba(255,0,0,0.18),
+      0 12px 42px rgba(0,0,0,0.60);
+    animation: dangerPulse 0.8s infinite alternate;
   }
 
   .countdown {
-    font-size: 24px;
-    font-family: monospace;
-    font-weight: bold;
-    color: var(--accent-color);
+    font-size: 56px;
+    font-family: Consolas, 'Courier New', monospace;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 4px;
     direction: ltr;
+    white-space: nowrap;
+    color: #fff;
+    text-align: center;
+    text-shadow:
+      0 0 10px rgba(255,255,255,0.25),
+      0 0 20px rgba(255,60,60,0.42),
+      0 0 40px rgba(255,0,0,0.22);
+  }
+
+  .countdown.expired {
+    color: #ff6b6b;
+  }
+
+  .header-right {
+    min-width: 150px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   .clock {
-    font-size: 32px;
-    font-family: monospace;
+    font-size: 34px;
+    font-family: Consolas, 'Courier New', monospace;
     font-weight: bold;
     color: var(--accent-color);
-    min-width: 130px;
-    text-align: center;
     direction: ltr;
+    text-align: center;
+    min-width: 120px;
   }
 
   /* אזור הגיליון */
   .sheet-container {
-    height: calc(100vh - 160px);
+    height: calc(100vh - 180px);
     background: #fff;
   }
 
@@ -100,11 +160,11 @@
     border: none;
   }
 
-  /* טיקר חדשות מודרני */
+  /* טיקר חדשות */
   .ticker-wrap {
     height: 70px;
     background: var(--header-bg);
-    border-top: 2px solid #333;
+    border-top: 2px solid #222;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -134,11 +194,6 @@
     animation: scroll-it var(--ticker-speed) linear infinite;
   }
 
-  @keyframes scroll-it {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(100%); }
-  }
-
   .news-item {
     display: flex;
     align-items: center;
@@ -151,11 +206,44 @@
     color: var(--accent-color);
     font-weight: bold;
     margin-left: 12px;
-    font-family: monospace;
+    font-family: Consolas, 'Courier New', monospace;
+    direction: ltr;
   }
 
   .ticker-wrap:hover .ticker-nav {
     animation-play-state: paused;
+  }
+
+  @keyframes scroll-it {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+
+  @keyframes framePulse {
+    from {
+      transform: scale(1);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 0 14px rgba(255,0,0,0.14),
+        0 12px 28px rgba(0,0,0,0.40);
+    }
+    to {
+      transform: scale(1.01);
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 0 24px rgba(255,0,0,0.24),
+        0 12px 36px rgba(0,0,0,0.52);
+    }
+  }
+
+  @keyframes dangerPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.015); }
+  }
+
+  @keyframes sweep {
+    0% { right: -35%; }
+    100% { right: 110%; }
   }
 </style>
 </head>
@@ -163,23 +251,24 @@
 <body>
 
 <div class="header">
-  <div class="logo">
-    <img src="לוגו בקהילה הכי טובים_Page_1.png" alt="בקהילה">
+  <div class="brand">
+    <div class="logo-text">בקהילה</div>
+    <div class="brand-sub">סטטוס מערכת העיתון</div>
   </div>
 
-  <div class="title">סטטוס מערכת העיתון</div>
-
-  <div class="header-right">
-    <div class="countdown-box">
-      <div class="countdown-label">ספירה לאחור ל-20/04/26 15:00</div>
+  <div class="center-zone">
+    <div id="deadlineFrame" class="deadline-frame">
       <div id="countdown" class="countdown">00:00:00:00</div>
     </div>
+  </div>
+
+  <div class="header-right">
     <div id="clock" class="clock">00:00:00</div>
   </div>
 </div>
 
 <div class="sheet-container">
-  <iframe src="https://docs.google.com/spreadsheets/d/1SKuHKR1LuL25cB596d4IL7HODO7TMZ5j0lWApPzjlnI/edit?usp=sharing"></iframe>
+  <iframe src="https://docs.google.com/spreadsheets/d/1SKuHKR1LuL25cB596d4IL7HODO7TMZ5j0lWApPzjlnI/preview"></iframe>
 </div>
 
 <div class="ticker-wrap">
@@ -190,7 +279,7 @@
 </div>
 
 <script>
-// עדכון שעון
+// שעון רגיל
 function updateClock() {
   const now = new Date();
   document.getElementById("clock").innerText = now.toLocaleTimeString('he-IL', {
@@ -201,18 +290,25 @@ function updateClock() {
   });
 }
 
-// שעון עצר לאחור עד 20/04/2026 15:00 (שעון ישראל קיץ +03:00)
+// ספירה לאחור עד 20/04/2026 15:00 שעון ישראל
 function updateCountdown() {
   const targetDate = new Date('2026-04-20T15:00:00+03:00');
   const now = new Date();
   const diff = targetDate - now;
 
   const countdownElem = document.getElementById("countdown");
+  const frameElem = document.getElementById("deadlineFrame");
+
+  frameElem.classList.remove("urgent", "danger");
 
   if (diff <= 0) {
     countdownElem.innerText = "00:00:00:00";
+    countdownElem.classList.add("expired");
+    frameElem.classList.add("danger");
     return;
   }
+
+  countdownElem.classList.remove("expired");
 
   const totalSeconds = Math.floor(diff / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -222,6 +318,14 @@ function updateCountdown() {
 
   const pad = (num) => String(num).padStart(2, '0');
   countdownElem.innerText = `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+
+  if (diff <= 6 * 60 * 60 * 1000) {
+    frameElem.classList.add("urgent");
+  }
+
+  if (diff <= 60 * 60 * 1000) {
+    frameElem.classList.add("danger");
+  }
 }
 
 setInterval(updateClock, 1000);
@@ -229,7 +333,7 @@ setInterval(updateCountdown, 1000);
 updateClock();
 updateCountdown();
 
-// משיכת חדשות מרוטר עם טיפול בקידוד
+// משיכת חדשות מרוטר
 async function loadNews() {
   const RSS_URL = "https://rotter.net/rss/rotternews.xml";
   const PROXY_URL = "https://corsproxy.io/?" + encodeURIComponent(RSS_URL + "?t=" + Date.now());
@@ -247,6 +351,7 @@ async function loadNews() {
     const items = xmlDoc.querySelectorAll("item");
 
     let newsHtml = "";
+
     items.forEach((item, index) => {
       if (index < 15) {
         const title = item.querySelector("title")?.textContent || "";
@@ -275,7 +380,7 @@ async function loadNews() {
 
       const textLength = tickerElem.innerText.length;
       const newSpeed = Math.max(20, textLength / 15);
-      tickerElem.style.setProperty('--ticker-speed', newSpeed + 's');
+      document.documentElement.style.setProperty('--ticker-speed', newSpeed + 's');
     }
   } catch (error) {
     console.error("News error:", error);
