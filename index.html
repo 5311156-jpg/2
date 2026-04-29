@@ -16,6 +16,10 @@
     --danger-soft: rgba(255,42,42,0.20);
     --text-soft: #cfcfcf;
     --ticker-speed: 30s;
+
+    /* התאמת תצוגת השיטס */
+    --sheet-scale: 0.89;
+    --sheet-expand: 112%;
   }
 
   * {
@@ -38,14 +42,14 @@
   }
 
   .header {
-    height: 140px;
+    height: 128px;
     background: var(--header-bg);
     backdrop-filter: blur(10px);
     display: grid;
     grid-template-columns: 280px 1fr 170px;
     align-items: center;
     gap: 24px;
-    padding: 14px 28px;
+    padding: 10px 28px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
     position: relative;
     z-index: 10;
@@ -70,8 +74,8 @@
   }
 
   .brand-logo {
-    max-width: 230px;
-    max-height: 82px;
+    max-width: 220px;
+    max-height: 76px;
     width: auto;
     height: auto;
     display: block;
@@ -88,9 +92,9 @@
   }
 
   .deadline-panel {
-    width: min(980px, 100%);
-    padding: 14px 18px 12px;
-    border-radius: 26px;
+    width: min(920px, 100%);
+    padding: 10px 14px 10px;
+    border-radius: 24px;
     border: 1px solid rgba(255,255,255,0.08);
     background:
       linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
@@ -129,8 +133,8 @@
 
   .countdown-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(110px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(4, minmax(100px, 1fr));
+    gap: 10px;
     position: relative;
     z-index: 2;
   }
@@ -139,8 +143,8 @@
     background:
       linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
     border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 18px;
-    padding: 10px 8px 8px;
+    border-radius: 16px;
+    padding: 8px 6px 7px;
     text-align: center;
     box-shadow:
       inset 0 0 0 1px rgba(255,255,255,0.02),
@@ -150,7 +154,7 @@
   .time-value {
     font-family: Consolas, 'Courier New', monospace;
     font-weight: 900;
-    font-size: 52px;
+    font-size: 46px;
     line-height: 1;
     letter-spacing: 2px;
     color: #fff;
@@ -162,8 +166,8 @@
   }
 
   .time-label {
-    margin-top: 8px;
-    font-size: 13px;
+    margin-top: 6px;
+    font-size: 12px;
     color: var(--text-soft);
     letter-spacing: 0.5px;
   }
@@ -171,8 +175,8 @@
   .progress-wrap {
     position: relative;
     z-index: 2;
-    margin-top: 12px;
-    height: 5px;
+    margin-top: 10px;
+    height: 4px;
     border-radius: 999px;
     background: rgba(255,255,255,0.06);
     overflow: hidden;
@@ -238,9 +242,9 @@
   }
 
   .clock-box {
-    min-width: 132px;
-    padding: 10px 12px;
-    border-radius: 16px;
+    min-width: 126px;
+    padding: 8px 10px;
+    border-radius: 14px;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.06);
     text-align: center;
@@ -249,7 +253,7 @@
 
   .clock {
     font-family: Consolas, 'Courier New', monospace;
-    font-size: 34px;
+    font-size: 31px;
     font-weight: 800;
     color: var(--accent-color);
     direction: ltr;
@@ -257,17 +261,30 @@
   }
 
   .sheet-container {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 198px);
     background: #ffffff;
     position: relative;
+    overflow: hidden;
   }
 
-  iframe {
+  .sheet-frame {
     width: 100%;
     height: 100%;
-    border: none;
-    display: block;
+    position: relative;
+    overflow: hidden;
     background: white;
+  }
+
+  .sheet-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--sheet-expand);
+    height: var(--sheet-expand);
+    border: none;
+    background: white;
+    transform: translateX(-50%) scale(var(--sheet-scale));
+    transform-origin: top center;
   }
 
   .ticker-wrap {
@@ -372,12 +389,12 @@
     }
 
     .time-value {
-      font-size: 42px;
+      font-size: 40px;
     }
 
     .brand-logo {
       max-width: 190px;
-      max-height: 68px;
+      max-height: 64px;
     }
   }
 
@@ -405,7 +422,7 @@
     }
 
     .time-value {
-      font-size: 34px;
+      font-size: 32px;
     }
   }
 </style>
@@ -454,7 +471,9 @@
 </div>
 
 <div class="sheet-container">
-  <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbohX6k5dU42dfDJ0CpHAtEN_AjgS5gaxYQ8XkwzluONXxvafnJUMOqOKxqw10gS2zbKqPg8y45zSy/pubhtml"></iframe>
+  <div class="sheet-frame">
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbohX6k5dU42dfDJ0CpHAtEN_AjgS5gaxYQ8XkwzluONXxvafnJUMOqOKxqw10gS2zbKqPg8y45zSy/pubhtml?widget=true&headers=false"></iframe>
+  </div>
 </div>
 
 <div class="ticker-wrap">
