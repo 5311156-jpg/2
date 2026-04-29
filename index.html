@@ -7,10 +7,11 @@
 
 <style>
   :root {
-    --bg-color: #0d0d0d;
-    --header-bg: #050505;
+    --bg-color: #0a0a0a;
+    --header-bg: #030303;
     --accent-color: #ffcc00;
-    --danger-color: #ff2a2a;
+    --danger-color: #ff2f2f;
+    --danger-soft: rgba(255, 47, 47, 0.22);
     --ticker-speed: 30s;
   }
 
@@ -21,43 +22,61 @@
   body {
     margin: 0;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg-color);
+    background:
+      radial-gradient(circle at center, rgba(120,0,0,0.10) 0%, rgba(0,0,0,0) 38%),
+      linear-gradient(180deg, #111 0%, #080808 100%);
     color: white;
     overflow: hidden;
   }
 
-  /* כותרת עליונה */
   .header {
-    height: 110px;
-    background: var(--header-bg);
+    height: 122px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0)),
+      var(--header-bg);
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 28px;
-    border-bottom: 2px solid #222;
+    border-bottom: 1px solid #222;
     gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,47,47,0.7), transparent);
+    box-shadow: 0 0 18px rgba(255,47,47,0.4);
   }
 
   .brand {
-    min-width: 190px;
+    min-width: 210px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
   .logo-text {
-    font-size: 44px;
+    font-size: 48px;
     font-weight: 900;
     line-height: 1;
     color: #fff;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 14px rgba(255,255,255,0.12);
+    text-shadow:
+      0 0 8px rgba(255,255,255,0.10),
+      0 0 24px rgba(255,255,255,0.06);
   }
 
   .brand-sub {
     margin-top: 6px;
     font-size: 14px;
-    color: #bcbcbc;
+    color: #a9a9a9;
   }
 
   .center-zone {
@@ -67,72 +86,138 @@
     align-items: center;
   }
 
-  .deadline-frame {
-    min-width: 440px;
-    padding: 14px 28px;
-    border-radius: 18px;
-    border: 1px solid rgba(255, 70, 70, 0.45);
+  .deadline-shell {
+    min-width: 640px;
+    max-width: 900px;
+    width: 100%;
+    padding: 12px 20px 16px;
+    border-radius: 22px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
-      linear-gradient(135deg, rgba(90,0,0,0.42), rgba(0,0,0,0.70));
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+      linear-gradient(135deg, rgba(70,0,0,0.42), rgba(0,0,0,0.82));
+    border: 1px solid rgba(255, 70, 70, 0.35);
     box-shadow:
-      0 0 0 1px rgba(255,255,255,0.04) inset,
-      0 0 18px rgba(255,0,0,0.18),
-      0 12px 32px rgba(0,0,0,0.45);
+      inset 0 0 0 1px rgba(255,255,255,0.02),
+      0 0 25px rgba(255, 0, 0, 0.14),
+      0 18px 42px rgba(0,0,0,0.45);
     position: relative;
     overflow: hidden;
-    animation: framePulse 1.5s infinite alternate;
+    animation: shellPulse 1.8s ease-in-out infinite alternate;
   }
 
-  .deadline-frame::before {
+  .deadline-shell::before {
     content: "";
     position: absolute;
-    right: -30%;
+    inset: 0;
+    background:
+      linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 48%, transparent 100%);
+    transform: translateX(-100%);
+    animation: sweep 3.4s linear infinite;
+    pointer-events: none;
+  }
+
+  .deadline-shell::after {
+    content: "";
+    position: absolute;
+    right: -20%;
     bottom: 0;
-    width: 60%;
+    width: 40%;
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--danger-color), transparent);
-    animation: sweep 1.7s linear infinite;
-  }
-
-  .deadline-frame.urgent {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.04) inset,
-      0 0 28px rgba(255,0,0,0.30),
-      0 12px 38px rgba(0,0,0,0.55);
-  }
-
-  .deadline-frame.danger {
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.04) inset,
-      0 0 34px rgba(255,0,0,0.42),
-      0 0 70px rgba(255,0,0,0.18),
-      0 12px 42px rgba(0,0,0,0.60);
-    animation: dangerPulse 0.8s infinite alternate;
+    box-shadow: 0 0 14px rgba(255,47,47,0.6);
+    animation: bottomSweep 1.7s linear infinite;
   }
 
   .countdown {
-    font-size: 56px;
     font-family: Consolas, 'Courier New', monospace;
-    font-weight: 800;
+    font-size: 76px;
+    font-weight: 900;
+    letter-spacing: 6px;
     line-height: 1;
-    letter-spacing: 4px;
     direction: ltr;
+    text-align: center;
     white-space: nowrap;
     color: #fff;
-    text-align: center;
     text-shadow:
-      0 0 10px rgba(255,255,255,0.25),
-      0 0 20px rgba(255,60,60,0.42),
-      0 0 40px rgba(255,0,0,0.22);
+      0 0 10px rgba(255,255,255,0.18),
+      0 0 24px rgba(255,70,70,0.24),
+      0 0 48px rgba(255,0,0,0.14);
+    position: relative;
+    z-index: 1;
   }
 
-  .countdown.expired {
-    color: #ff6b6b;
+  .countdown .sep {
+    display: inline-block;
+    width: 0.8ch;
+    text-align: center;
+    color: #ff8080;
+    animation: blink 1s steps(1) infinite;
+  }
+
+  .micro-bar {
+    margin-top: 12px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .micro-bar-fill {
+    height: 100%;
+    width: 22%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #6b0000, #ff2f2f, #ff8b8b);
+    box-shadow: 0 0 16px rgba(255,47,47,0.45);
+    animation: barMove 1.6s linear infinite;
+  }
+
+  .deadline-shell.urgent {
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.02),
+      0 0 34px rgba(255, 0, 0, 0.22),
+      0 18px 46px rgba(0,0,0,0.52);
+  }
+
+  .deadline-shell.urgent .countdown {
+    text-shadow:
+      0 0 12px rgba(255,255,255,0.20),
+      0 0 28px rgba(255,70,70,0.30),
+      0 0 60px rgba(255,0,0,0.20);
+  }
+
+  .deadline-shell.danger {
+    border-color: rgba(255, 70, 70, 0.7);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.03),
+      0 0 44px rgba(255, 0, 0, 0.30),
+      0 0 90px rgba(255, 0, 0, 0.12),
+      0 18px 52px rgba(0,0,0,0.58);
+    animation: dangerPulse 0.75s ease-in-out infinite alternate;
+  }
+
+  .deadline-shell.danger .countdown {
+    color: #fff3f3;
+    text-shadow:
+      0 0 12px rgba(255,255,255,0.24),
+      0 0 34px rgba(255,80,80,0.35),
+      0 0 74px rgba(255,0,0,0.28);
+  }
+
+  .deadline-shell.expired {
+    border-color: rgba(255, 90, 90, 0.85);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.03),
+      0 0 36px rgba(255, 0, 0, 0.34),
+      0 0 90px rgba(255, 0, 0, 0.16);
+  }
+
+  .deadline-shell.expired .countdown {
+    color: #ff9d9d;
   }
 
   .header-right {
-    min-width: 150px;
+    min-width: 140px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -141,16 +226,16 @@
   .clock {
     font-size: 34px;
     font-family: Consolas, 'Courier New', monospace;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--accent-color);
     direction: ltr;
     text-align: center;
     min-width: 120px;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.18);
   }
 
-  /* אזור הגיליון */
   .sheet-container {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 192px);
     background: #fff;
   }
 
@@ -158,29 +243,30 @@
     width: 100%;
     height: 100%;
     border: none;
+    display: block;
   }
 
-  /* טיקר חדשות */
   .ticker-wrap {
     height: 70px;
     background: var(--header-bg);
-    border-top: 2px solid #222;
+    border-top: 1px solid #222;
     position: fixed;
     bottom: 0;
     width: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
+    z-index: 5;
   }
 
   .ticker-label {
-    background: #ce0000;
+    background: #c40000;
     color: white;
     padding: 0 25px;
     height: 100%;
     display: flex;
     align-items: center;
-    font-weight: bold;
+    font-weight: 800;
     font-size: 22px;
     z-index: 100;
     box-shadow: 10px 0 20px rgba(0,0,0,0.8);
@@ -204,7 +290,7 @@
 
   .news-time {
     color: var(--accent-color);
-    font-weight: bold;
+    font-weight: 700;
     margin-left: 12px;
     font-family: Consolas, 'Courier New', monospace;
     direction: ltr;
@@ -219,31 +305,57 @@
     100% { transform: translateX(100%); }
   }
 
-  @keyframes framePulse {
+  @keyframes shellPulse {
     from {
       transform: scale(1);
       box-shadow:
-        0 0 0 1px rgba(255,255,255,0.04) inset,
-        0 0 14px rgba(255,0,0,0.14),
-        0 12px 28px rgba(0,0,0,0.40);
+        inset 0 0 0 1px rgba(255,255,255,0.02),
+        0 0 20px rgba(255, 0, 0, 0.12),
+        0 18px 38px rgba(0,0,0,0.42);
     }
     to {
-      transform: scale(1.01);
+      transform: scale(1.008);
       box-shadow:
-        0 0 0 1px rgba(255,255,255,0.04) inset,
-        0 0 24px rgba(255,0,0,0.24),
-        0 12px 36px rgba(0,0,0,0.52);
+        inset 0 0 0 1px rgba(255,255,255,0.02),
+        0 0 30px rgba(255, 0, 0, 0.18),
+        0 18px 46px rgba(0,0,0,0.5);
     }
   }
 
   @keyframes dangerPulse {
     from { transform: scale(1); }
-    to { transform: scale(1.015); }
+    to { transform: scale(1.014); }
   }
 
   @keyframes sweep {
+    0% { transform: translateX(-115%); }
+    100% { transform: translateX(115%); }
+  }
+
+  @keyframes bottomSweep {
     0% { right: -35%; }
-    100% { right: 110%; }
+    100% { right: 115%; }
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0.35; }
+  }
+
+  @keyframes barMove {
+    0% { transform: translateX(-130%); }
+    100% { transform: translateX(520%); }
+  }
+
+  @media (max-width: 1200px) {
+    .countdown {
+      font-size: 58px;
+      letter-spacing: 4px;
+    }
+
+    .deadline-shell {
+      min-width: 480px;
+    }
   }
 </style>
 </head>
@@ -257,8 +369,11 @@
   </div>
 
   <div class="center-zone">
-    <div id="deadlineFrame" class="deadline-frame">
-      <div id="countdown" class="countdown">00:00:00:00</div>
+    <div id="deadlineShell" class="deadline-shell">
+      <div id="countdown" class="countdown">00<span class="sep">:</span>00<span class="sep">:</span>00<span class="sep">:</span>00</div>
+      <div class="micro-bar">
+        <div class="micro-bar-fill"></div>
+      </div>
     </div>
   </div>
 
@@ -279,7 +394,10 @@
 </div>
 
 <script>
-// שעון רגיל
+function pad(num) {
+  return String(num).padStart(2, '0');
+}
+
 function updateClock() {
   const now = new Date();
   document.getElementById("clock").innerText = now.toLocaleTimeString('he-IL', {
@@ -290,25 +408,21 @@ function updateClock() {
   });
 }
 
-// ספירה לאחור עד 20/04/2026 15:00 שעון ישראל
 function updateCountdown() {
-  const targetDate = new Date('2026-04-20T15:00:00+03:00');
+  const targetDate = new Date('2026-04-29T15:00:00+03:00');
   const now = new Date();
   const diff = targetDate - now;
 
   const countdownElem = document.getElementById("countdown");
-  const frameElem = document.getElementById("deadlineFrame");
+  const shellElem = document.getElementById("deadlineShell");
 
-  frameElem.classList.remove("urgent", "danger");
+  shellElem.classList.remove("urgent", "danger", "expired");
 
   if (diff <= 0) {
-    countdownElem.innerText = "00:00:00:00";
-    countdownElem.classList.add("expired");
-    frameElem.classList.add("danger");
+    countdownElem.innerHTML = `00<span class="sep">:</span>00<span class="sep">:</span>00<span class="sep">:</span>00`;
+    shellElem.classList.add("expired");
     return;
   }
-
-  countdownElem.classList.remove("expired");
 
   const totalSeconds = Math.floor(diff / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -316,24 +430,18 @@ function updateCountdown() {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  const pad = (num) => String(num).padStart(2, '0');
-  countdownElem.innerText = `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  countdownElem.innerHTML =
+    `${pad(days)}<span class="sep">:</span>${pad(hours)}<span class="sep">:</span>${pad(minutes)}<span class="sep">:</span>${pad(seconds)}`;
 
-  if (diff <= 6 * 60 * 60 * 1000) {
-    frameElem.classList.add("urgent");
+  if (diff <= 24 * 60 * 60 * 1000) {
+    shellElem.classList.add("urgent");
   }
 
-  if (diff <= 60 * 60 * 1000) {
-    frameElem.classList.add("danger");
+  if (diff <= 6 * 60 * 60 * 1000) {
+    shellElem.classList.add("danger");
   }
 }
 
-setInterval(updateClock, 1000);
-setInterval(updateCountdown, 1000);
-updateClock();
-updateCountdown();
-
-// משיכת חדשות מרוטר
 async function loadNews() {
   const RSS_URL = "https://rotter.net/rss/rotternews.xml";
   const PROXY_URL = "https://corsproxy.io/?" + encodeURIComponent(RSS_URL + "?t=" + Date.now());
@@ -358,11 +466,13 @@ async function loadNews() {
         const pubDate = item.querySelector("pubDate")?.textContent || "";
 
         const dateObj = new Date(pubDate);
-        const timeStr = isNaN(dateObj) ? "" : dateObj.toLocaleTimeString('he-IL', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false
-        });
+        const timeStr = isNaN(dateObj)
+          ? ""
+          : dateObj.toLocaleTimeString('he-IL', {
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+            });
 
         newsHtml += `
           <div class="news-item">
@@ -387,7 +497,12 @@ async function loadNews() {
   }
 }
 
+updateClock();
+updateCountdown();
 loadNews();
+
+setInterval(updateClock, 1000);
+setInterval(updateCountdown, 1000);
 setInterval(loadNews, 120000);
 </script>
 
