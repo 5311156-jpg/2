@@ -9,15 +9,12 @@
   :root {
     --bg-color: #070707;
     --header-bg: rgba(10, 10, 10, 0.92);
-    --panel-bg: rgba(255,255,255,0.04);
-    --panel-border: rgba(255,255,255,0.08);
     --accent-color: #ffcc00;
     --danger-color: #ff2a2a;
-    --danger-soft: rgba(255,42,42,0.20);
     --text-soft: #cfcfcf;
     --ticker-speed: 30s;
 
-    /* התאמה כדי שגם השורה התחתונה תיכנס */
+    /* התאמת תצוגת השיטס */
     --sheet-scale: 0.82;
     --sheet-expand: 122%;
   }
@@ -43,7 +40,7 @@
 
   .header {
     height: 120px;
-    background: var(--header-bg);
+    background: rgba(10, 10, 10, 0.92);
     backdrop-filter: blur(10px);
     display: grid;
     grid-template-columns: 260px 1fr 150px;
@@ -472,7 +469,7 @@
 
 <div class="sheet-container">
   <div class="sheet-frame">
-    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3pBkPKvWssmk9liwSqRT83OmW7igQBO4egXEtGdN0tcyzymg-JFAVcg0PJBTexicFnd40PfBu_7gC/pubhtml?widget=true&headers=false"></iframe>
+    <iframe id="sheetFrame" src="https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/preview"></iframe>
   </div>
 </div>
 
@@ -484,6 +481,8 @@
 </div>
 
 <script>
+const SHEET_BASE_URL = "https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/preview";
+
 function pad(num) {
   return String(num).padStart(2, '0');
 }
@@ -534,6 +533,11 @@ function updateCountdown() {
   if (diff <= 6 * 60 * 60 * 1000) {
     panel.classList.add("danger");
   }
+}
+
+function refreshSheet() {
+  const iframe = document.getElementById("sheetFrame");
+  iframe.src = SHEET_BASE_URL + "?t=" + Date.now();
 }
 
 function processLogoToTransparent() {
@@ -700,6 +704,7 @@ loadNews();
 setInterval(updateClock, 1000);
 setInterval(updateCountdown, 1000);
 setInterval(loadNews, 120000);
+setInterval(refreshSheet, 20000);
 </script>
 
 </body>
