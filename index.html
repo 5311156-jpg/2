@@ -1,48 +1,57 @@
-# דשבורד מערכת "בקהילה" – גרסת PRO 2026
-
-```html
 <!doctype html>
 <html lang="he" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>בקהילה | מערכת החדשות</title>
+
+<title>בקהילה | Newsroom PRO</title>
 
 <style>
+
 :root{
-  --bg:#050505;
-  --panel:#101010ee;
-  --accent:#ffcc00;
-  --danger:#ff2a2a;
-  --soft:#cfcfcf;
-  --line:rgba(255,255,255,.08);
-  --ticker-speed:45s;
+  --ticker-speed:65s;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  height:100%;
+}
 
 body{
   margin:0;
   overflow:hidden;
-  color:#fff;
+  color:white;
   font-family:Segoe UI,Arial,sans-serif;
+
   background:
-  radial-gradient(circle at top, rgba(255,0,0,.14), transparent 28%),
-  linear-gradient(180deg,#161616,#060606);
+    radial-gradient(circle at top,
+      rgba(255,0,0,.12),
+      transparent 28%),
+    linear-gradient(180deg,#161616,#040404);
 }
 
 /* HEADER */
+
 .header{
-  height:120px;
+  height:110px;
+
   display:grid;
-  grid-template-columns:260px 1fr 170px;
+  grid-template-columns:240px 1fr 160px;
+
   align-items:center;
   gap:20px;
-  padding:10px 24px;
+
+  padding:10px 22px;
+
   background:rgba(0,0,0,.82);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--line);
+
+  border-bottom:1px solid rgba(255,255,255,.08);
+
   position:relative;
   z-index:50;
 }
@@ -53,49 +62,90 @@ body{
   bottom:0;
   right:0;
   left:0;
+
   height:2px;
-  background:linear-gradient(90deg,transparent,#ff2a2a,transparent);
-  box-shadow:0 0 20px rgba(255,0,0,.45);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ff2a2a,
+      transparent);
+
+  box-shadow:
+    0 0 18px rgba(255,0,0,.45);
 }
 
 .logo{
-  font-size:52px;
+  font-size:50px;
   font-weight:900;
-  color:white;
   letter-spacing:-2px;
 }
 
 .logo span{
-  color:var(--danger);
+  color:#ff2a2a;
+}
+
+/* CLOCK */
+
+.clock-box{
+  background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:14px;
+
+  padding:10px;
+
+  text-align:center;
+}
+
+.clock{
+  font-size:30px;
+  font-family:Consolas;
+  font-weight:900;
+  color:#ffcc00;
 }
 
 /* COUNTDOWN */
+
 .center-zone{
   display:flex;
   justify-content:center;
 }
 
 .deadline-panel{
-  width:min(920px,100%);
-  padding:12px;
+
+  width:min(760px,100%);
+
+  padding:10px;
+
   border-radius:24px;
+
   background:
-  linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),
-  linear-gradient(135deg,rgba(60,0,0,.35),rgba(0,0,0,.9));
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.05),
+      rgba(255,255,255,.02)),
+
+    linear-gradient(
+      135deg,
+      rgba(60,0,0,.35),
+      rgba(0,0,0,.9));
+
   border:1px solid rgba(255,255,255,.08);
+
   box-shadow:
-  0 0 40px rgba(255,0,0,.12),
-  0 14px 35px rgba(0,0,0,.45);
-  position:relative;
-  overflow:hidden;
+    0 0 35px rgba(255,0,0,.12),
+    0 14px 35px rgba(0,0,0,.45);
+
   animation:pulse 2s infinite alternate;
 }
 
 .deadline-title{
   text-align:center;
-  margin-bottom:10px;
-  font-size:18px;
-  color:#ffd8d8;
+  margin-bottom:8px;
+  color:#ffd7d7;
   font-weight:700;
 }
 
@@ -106,62 +156,65 @@ body{
 }
 
 .time-box{
-  border-radius:18px;
+
   background:rgba(255,255,255,.04);
+
   border:1px solid rgba(255,255,255,.07);
-  padding:10px;
+
+  border-radius:18px;
+
+  padding:8px;
+
   text-align:center;
 }
 
 .time-value{
-  font-size:48px;
+  font-size:40px;
   font-weight:900;
   font-family:Consolas;
-  text-shadow:0 0 18px rgba(255,0,0,.25);
+
+  text-shadow:
+    0 0 16px rgba(255,0,0,.25);
 }
 
 .time-label{
-  color:#bbb;
   margin-top:5px;
-  font-size:13px;
+  color:#aaa;
+  font-size:12px;
 }
 
 .progress-wrap{
   margin-top:10px;
   height:5px;
-  border-radius:999px;
   overflow:hidden;
+
+  border-radius:999px;
+
   background:rgba(255,255,255,.06);
 }
 
 .progress-bar{
   width:20%;
   height:100%;
-  background:linear-gradient(90deg,#5c0000,#ff2a2a,#ff9999);
+
+  background:
+    linear-gradient(
+      90deg,
+      #5c0000,
+      #ff2a2a,
+      #ff9999);
+
   animation:move 1.8s linear infinite;
 }
 
-/* CLOCK */
-.clock-box{
-  text-align:center;
-  padding:10px;
-  border-radius:14px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-}
-
-.clock{
-  font-size:32px;
-  font-family:Consolas;
-  color:var(--accent);
-  font-weight:800;
-}
-
 /* MAIN */
+
 .main-layout{
+
   display:grid;
-  grid-template-columns:1fr 340px;
-  height:calc(100vh - 190px);
+  grid-template-columns:1fr 320px;
+
+  height:calc(100vh - 180px);
 }
 
 .sheet-area{
@@ -171,125 +224,203 @@ body{
 }
 
 .sheet-area iframe{
+
+  position:absolute;
+
+  left:50%;
+  top:-18px;
+
   width:124%;
   height:124%;
+
   border:none;
-  transform:scale(.81);
+
+  transform:translateX(-50%) scale(.81);
+
   transform-origin:top center;
-  position:absolute;
-  left:50%;
-  top:0;
-  translate:-50% 0;
 }
 
 /* SIDEBAR */
+
 .sidebar{
+
   background:#0d0d0d;
-  border-right:1px solid rgba(255,255,255,.07);
+
+  border-right:1px solid rgba(255,255,255,.08);
+
   display:flex;
   flex-direction:column;
+
   gap:12px;
+
   padding:12px;
 }
 
 .widget{
+
   background:rgba(255,255,255,.03);
+
   border:1px solid rgba(255,255,255,.07);
+
   border-radius:18px;
+
   padding:14px;
-  box-shadow:0 10px 25px rgba(0,0,0,.28);
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,.28);
 }
 
 .widget-title{
+
+  color:#ffcc00;
+
   font-size:18px;
   font-weight:800;
+
   margin-bottom:12px;
-  color:var(--accent);
 }
 
 .status-item{
+
   display:flex;
   justify-content:space-between;
-  margin-bottom:10px;
+
   padding-bottom:10px;
+  margin-bottom:10px;
+
   border-bottom:1px solid rgba(255,255,255,.05);
 }
 
 .badge{
+
   padding:4px 10px;
+
   border-radius:999px;
+
   font-size:12px;
   font-weight:700;
 }
 
-.green{background:#123b12;color:#7dff7d}
-.orange{background:#4a3200;color:#ffd66b}
-.red{background:#4a0000;color:#ff9d9d}
+.green{
+  background:#123b12;
+  color:#7dff7d;
+}
 
-/* ALERT */
+.orange{
+  background:#4a3200;
+  color:#ffd66b;
+}
+
+.red{
+  background:#4a0000;
+  color:#ff9d9d;
+}
+
+/* BREAKING */
+
 .breaking{
+
   position:absolute;
-  top:132px;
+
+  top:118px;
   left:50%;
+
   transform:translateX(-50%);
+
   background:#c40000;
+
   color:white;
+
   padding:12px 28px;
+
   border-radius:999px;
+
   font-size:22px;
   font-weight:900;
+
   z-index:99;
+
   display:none;
-  box-shadow:0 0 35px rgba(255,0,0,.5);
+
+  box-shadow:
+    0 0 35px rgba(255,0,0,.5);
+
   animation:blink .7s infinite alternate;
 }
 
 /* TICKER */
+
 .ticker-wrap{
+
   position:fixed;
+
   bottom:0;
   right:0;
   left:0;
+
   height:70px;
+
   background:#050505f0;
+
   border-top:1px solid rgba(255,255,255,.08);
+
   display:flex;
   align-items:center;
+
   overflow:hidden;
+
   z-index:80;
 }
 
 .ticker-label{
+
   height:100%;
+
   background:#c40000;
+
   display:flex;
   align-items:center;
+
   padding:0 26px;
+
   font-size:24px;
   font-weight:900;
+
   white-space:nowrap;
 }
 
 .ticker-track{
+
   display:flex;
+
   white-space:nowrap;
+
   padding-right:100%;
+
   animation:ticker var(--ticker-speed) linear infinite;
 }
 
 .news-item{
+
   display:flex;
   align-items:center;
+
   font-size:28px;
+
   padding:0 40px;
 }
 
 .news-time{
-  color:var(--accent);
-  font-weight:900;
-  margin-left:14px;
+
+  color:#ffcc00;
+
   font-family:Consolas;
+  font-weight:900;
+
+  margin-left:14px;
 }
+
+/* WEATHER */
 
 .weather-temp{
   font-size:46px;
@@ -300,6 +431,8 @@ body{
   color:#aaa;
   font-size:14px;
 }
+
+/* ANIMATIONS */
 
 @keyframes ticker{
   from{transform:translateX(0)}
@@ -321,25 +454,44 @@ body{
   to{opacity:1}
 }
 
-@media(max-width:1300px){
-  .main-layout{grid-template-columns:1fr}
-  .sidebar{display:none}
+.flash{
+  animation:screenFlash .35s;
 }
+
+@keyframes screenFlash{
+  0%{
+    background:#ff0000;
+  }
+  100%{
+    background:transparent;
+  }
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="breaking" id="breakingBanner">⚡ מבזק חם התקבל במערכת</div>
+<div class="breaking" id="breakingBanner">
+⚡ מבזק חם התקבל
+</div>
 
 <div class="header">
-  <div class="logo"><span>ב</span>קהילה</div>
+
+  <div class="logo">
+    <span>ב</span>קהילה
+  </div>
 
   <div class="center-zone">
-    <div class="deadline-panel" id="deadlinePanel">
-      <div class="deadline-title">⏳ ספירה לאחור לסגירת הגיליון</div>
+
+    <div class="deadline-panel">
+
+      <div class="deadline-title">
+        ⏳ ספירה לאחור לסגירת הגיליון
+      </div>
 
       <div class="countdown-grid">
+
         <div class="time-box">
           <div class="time-value" id="days">00</div>
           <div class="time-label">ימים</div>
@@ -359,31 +511,41 @@ body{
           <div class="time-value" id="seconds">00</div>
           <div class="time-label">שניות</div>
         </div>
+
       </div>
 
       <div class="progress-wrap">
         <div class="progress-bar"></div>
       </div>
+
     </div>
+
   </div>
 
   <div class="clock-box">
     <div class="clock" id="clock">00:00:00</div>
   </div>
+
 </div>
 
 <div class="main-layout">
 
   <div class="sheet-area">
-    <iframe id="sheetFrame"
-      src="https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/preview">
+
+    <iframe
+      id="sheetFrame"
+      src="https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/pubhtml?widget=true&headers=false">
     </iframe>
+
   </div>
 
   <div class="sidebar">
 
     <div class="widget">
-      <div class="widget-title">📊 סטטוס מערכת</div>
+
+      <div class="widget-title">
+        📊 סטטוס מערכת
+      </div>
 
       <div class="status-item">
         <span>כתבים</span>
@@ -399,43 +561,72 @@ body{
         <span>דפוס</span>
         <span class="badge red">ממתין</span>
       </div>
+
     </div>
 
     <div class="widget">
-      <div class="widget-title">🌤 מזג אוויר ירושלים</div>
-      <div class="weather-temp" id="weatherTemp">26°</div>
-      <div class="small">שמיים בהירים</div>
+
+      <div class="widget-title">
+        🌤 מזג אוויר ירושלים
+      </div>
+
+      <div class="weather-temp" id="weatherTemp">
+        26°
+      </div>
+
+      <div class="small">
+        שמיים בהירים
+      </div>
+
     </div>
 
     <div class="widget">
-      <div class="widget-title">⚡ עומס חדשות</div>
-      <div style="font-size:40px;font-weight:900;color:#ff4444">HIGH</div>
-      <div class="small">15 מבזקים אחרונים</div>
+
+      <div class="widget-title">
+        ⚡ עומס חדשות
+      </div>
+
+      <div style="font-size:40px;font-weight:900;color:#ff4444">
+        HIGH
+      </div>
+
+      <div class="small">
+        15 מבזקים אחרונים
+      </div>
+
     </div>
 
   </div>
+
 </div>
 
 <div class="ticker-wrap">
-  <div class="ticker-label">מבזקי רוטר</div>
-  <div class="ticker-track" id="tickerTrack">
-    <div class="news-item">טוען חדשות...</div>
+
+  <div class="ticker-label">
+    מבזקי רוטר
   </div>
+
+  <div class="ticker-track" id="tickerTrack">
+
+    <div class="news-item">
+      טוען חדשות...
+    </div>
+
+  </div>
+
 </div>
 
 <script>
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/preview";
-
-function pad(n){
-  return String(n).padStart(2,'0');
-}
 
 /* CLOCK */
+
 function updateClock(){
+
   const now = new Date();
 
   document.getElementById('clock').innerText =
     now.toLocaleTimeString('he-IL',{
+
       hour:'2-digit',
       minute:'2-digit',
       second:'2-digit',
@@ -444,20 +635,21 @@ function updateClock(){
 }
 
 /* COUNTDOWN */
+
+function pad(n){
+  return String(n).padStart(2,'0');
+}
+
 function updateCountdown(){
 
-  const target = new Date('2026-05-27T15:00:00+03:00');
+  const target =
+    new Date('2026-05-27T15:00:00+03:00');
+
   const now = new Date();
 
   const diff = target - now;
 
   if(diff <= 0){
-    document.getElementById('days').innerText = '00';
-    document.getElementById('hours').innerText = '00';
-    document.getElementById('minutes').innerText = '00';
-    document.getElementById('seconds').innerText = '00';
-
-    document.querySelector('.deadline-title').innerText = '⚠ הדדליין הגיע';
     return;
   }
 
@@ -472,32 +664,43 @@ function updateCountdown(){
   document.getElementById('hours').innerText = pad(hours);
   document.getElementById('minutes').innerText = pad(minutes);
   document.getElementById('seconds').innerText = pad(seconds);
-
-  if(diff < 1000 * 60 * 60 * 6){
-    document.getElementById('breakingBanner').style.display = 'block';
-  }
 }
 
 /* NEWS */
-let previousFirstHeadline = '';
+
+let previousHeadline = '';
 
 async function loadNews(){
 
-  const RSS = 'https://rotter.net/rss/rotternews.xml';
-  const PROXY = 'https://corsproxy.io/?' + encodeURIComponent(RSS);
+  const RSS =
+    'https://rotter.net/rss/rotternews.xml';
+
+  const PROXY =
+    'https://corsproxy.io/?' +
+    encodeURIComponent(RSS);
 
   try{
 
     const response = await fetch(PROXY);
-    const buffer = await response.arrayBuffer();
 
-    const decoder = new TextDecoder('windows-1255');
-    const text = decoder.decode(buffer);
+    const buffer =
+      await response.arrayBuffer();
+
+    const decoder =
+      new TextDecoder('windows-1255');
+
+    const text =
+      decoder.decode(buffer);
 
     const parser = new DOMParser();
-    const xml = parser.parseFromString(text,'text/xml');
 
-    const items = xml.querySelectorAll('item');
+    const xml =
+      parser.parseFromString(
+        text,
+        'text/xml');
+
+    const items =
+      xml.querySelectorAll('item');
 
     let html = '';
 
@@ -505,38 +708,75 @@ async function loadNews(){
 
       if(index < 15){
 
-        const title = item.querySelector('title')?.textContent || '';
-        const pubDate = item.querySelector('pubDate')?.textContent || '';
+        const title =
+          item.querySelector('title')
+          ?.textContent || '';
 
-        const dateObj = new Date(pubDate);
+        const pubDate =
+          item.querySelector('pubDate')
+          ?.textContent || '';
 
-        const time = isNaN(dateObj)
-          ? ''
-          : dateObj.toLocaleTimeString('he-IL',{
-              hour:'2-digit',
-              minute:'2-digit',
-              hour12:false
-            });
+        const dateObj =
+          new Date(pubDate);
+
+        const time =
+          isNaN(dateObj)
+            ? ''
+            : dateObj.toLocaleTimeString(
+                'he-IL',
+                {
+                  hour:'2-digit',
+                  minute:'2-digit',
+                  hour12:false
+                });
 
         html += `
           <div class="news-item">
-            <span class="news-time">${time}</span>
-            <span>${title}</span>
+
+            <span class="news-time">
+              ${time}
+            </span>
+
+            <span>
+              ${title}
+            </span>
+
           </div>
         `;
       }
     });
 
-    document.getElementById('tickerTrack').innerHTML = html;
+    document.getElementById(
+      'tickerTrack'
+    ).innerHTML = html;
 
-    const firstHeadline = items[0]?.querySelector('title')?.textContent || '';
+    const firstHeadline =
+      items[0]
+      ?.querySelector('title')
+      ?.textContent || '';
 
-    if(previousFirstHeadline && previousFirstHeadline !== firstHeadline){
+    if(
+      previousHeadline &&
+      previousHeadline !== firstHeadline
+    ){
+
       triggerBreaking(firstHeadline);
       playAlert();
+
+      if(
+        firstHeadline.includes('פיגוע') ||
+        firstHeadline.includes('חוסל') ||
+        firstHeadline.includes('אזעק')
+      ){
+        document.body.classList.add('flash');
+
+        setTimeout(()=>{
+          document.body.classList.remove('flash');
+        },400);
+      }
     }
 
-    previousFirstHeadline = firstHeadline;
+    previousHeadline = firstHeadline;
 
   }catch(e){
     console.log(e);
@@ -544,10 +784,16 @@ async function loadNews(){
 }
 
 /* BREAKING */
-function triggerBreaking(text){
-  const banner = document.getElementById('breakingBanner');
 
-  banner.innerText = '⚡ ' + text;
+function triggerBreaking(text){
+
+  const banner =
+    document.getElementById(
+      'breakingBanner');
+
+  banner.innerText =
+    '⚡ ' + text;
+
   banner.style.display = 'block';
 
   setTimeout(()=>{
@@ -556,27 +802,52 @@ function triggerBreaking(text){
 }
 
 /* ALERT SOUND */
+
 function playAlert(){
+
   try{
-    const audio = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg');
-    audio.volume = 0.3;
+
+    const audio =
+      new Audio(
+        'https://actions.google.com/sounds/v1/alarms/beep_short.ogg'
+      );
+
+    audio.volume = .25;
+
     audio.play();
+
   }catch(e){}
 }
 
 /* SHEET REFRESH */
+
 function refreshSheet(){
-  document.getElementById('sheetFrame').src =
-    SHEET_URL + '?t=' + Date.now();
+
+  document.getElementById(
+    'sheetFrame'
+  ).src =
+
+    'https://docs.google.com/spreadsheets/d/1xmdZjpeimcgb3YF4P5wWQUoB6B4XjOjvk1-K9u_nV6E/pubhtml?widget=true&headers=false&t='
+    + Date.now();
 }
 
-/* WEATHER DEMO */
+/* WEATHER */
+
 function fakeWeather(){
-  const temps = [24,25,26,27,28];
-  const t = temps[Math.floor(Math.random()*temps.length)];
 
-  document.getElementById('weatherTemp').innerText = t + '°';
+  const temps = [24,25,26,27,28];
+
+  const t =
+    temps[
+      Math.floor(
+        Math.random()*temps.length)];
+
+  document.getElementById(
+    'weatherTemp'
+  ).innerText = t + '°';
 }
+
+/* INIT */
 
 updateClock();
 updateCountdown();
@@ -585,27 +856,14 @@ fakeWeather();
 
 setInterval(updateClock,1000);
 setInterval(updateCountdown,1000);
+
 setInterval(loadNews,120000);
+
 setInterval(refreshSheet,90000);
+
 setInterval(fakeWeather,300000);
 
 </script>
 
 </body>
 </html>
-```
-
-## מה נוסף בגרסה הזאת
-
-* קאונטדאון חדש ל־27/05/2026 בשעה 15:00
-* טיקר מקצועי עם RSS חי
-* התראת מבזק קופצת
-* צליל למבזק חדש
-* Sidebar של סטטוסים
-* מצב עומס מערכת
-* מזג אוויר
-* Glow / blur / newsroom style
-* רענון אוטומטי חכם לשיטס
-* אנימציות מקצועיות
-* Responsive
-* מוכן למסך newsroom / OBS / TV
