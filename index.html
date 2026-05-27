@@ -1,655 +1,273 @@
 <!doctype html>
 <html lang="he" dir="rtl">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>בקהילה | Newsroom PRO</title>
+<title>בקהילה - דשבורד מערכת</title>
 
 <style>
-
-:root{
-  --ticker-speed:65s;
-}
-
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  height:100%;
-}
-
-body{
-  margin:0;
-  overflow:hidden;
-  color:white;
-  font-family:Segoe UI,Arial,sans-serif;
-
-  background:
-    radial-gradient(circle at top,
-      rgba(255,0,0,.12),
-      transparent 28%),
-    linear-gradient(180deg,#161616,#040404);
-}
-
-/* HEADER */
-
-.header{
-  height:100px;
-
-  display:grid;
-  grid-template-columns:220px 1fr 160px;
-
-  align-items:center;
-  gap:18px;
-
-  padding:10px 18px;
-
-  background:rgba(0,0,0,.82);
-
-  backdrop-filter:blur(12px);
-
-  border-bottom:1px solid rgba(255,255,255,.08);
-
-  position:relative;
-  z-index:50;
-}
-
-.header:after{
-  content:"";
-
-  position:absolute;
-
-  bottom:0;
-  right:0;
-  left:0;
-
-  height:2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      #ff2a2a,
-      transparent);
-
-  box-shadow:
-    0 0 18px rgba(255,0,0,.45);
-}
-
-/* LOGO */
-
-.logo-wrap{
-  display:flex;
-  align-items:center;
-}
-
-.logo-img{
-  max-width:180px;
-  max-height:58px;
-
-  object-fit:contain;
-
-  filter:
-    drop-shadow(0 0 10px rgba(255,255,255,.06))
-    drop-shadow(0 0 18px rgba(255,0,0,.15));
-}
-
-/* CLOCK */
-
-.clock-box{
-  background:rgba(255,255,255,.04);
-
-  border:1px solid rgba(255,255,255,.08);
-
-  border-radius:14px;
-
-  padding:10px;
-
-  text-align:center;
-}
-
-.clock{
-  font-size:28px;
-  font-family:Consolas;
-  font-weight:900;
-  color:#ffcc00;
-}
-
-/* COUNTDOWN */
-
-.center-zone{
-  display:flex;
-  justify-content:center;
-}
-
-.deadline-panel{
-  width:min(720px,100%);
-
-  padding:8px;
-
-  border-radius:24px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.05),
-      rgba(255,255,255,.02)),
-
-    linear-gradient(
-      135deg,
-      rgba(60,0,0,.35),
-      rgba(0,0,0,.9));
-
-  border:1px solid rgba(255,255,255,.08);
-
-  box-shadow:
-    0 0 35px rgba(255,0,0,.12),
-    0 14px 35px rgba(0,0,0,.45);
-
-  animation:pulse 2s infinite alternate;
-}
-
-.deadline-title{
-  text-align:center;
-
-  margin-bottom:6px;
-
-  color:#ffd7d7;
-
-  font-weight:700;
-
-  font-size:15px;
-}
-
-.countdown-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:8px;
-}
-
-.time-box{
-  background:rgba(255,255,255,.04);
-
-  border:1px solid rgba(255,255,255,.07);
-
-  border-radius:16px;
-
-  padding:7px;
-
-  text-align:center;
-}
-
-.time-value{
-  font-size:34px;
-
-  font-weight:900;
-
-  font-family:Consolas;
-
-  text-shadow:
-    0 0 16px rgba(255,0,0,.25);
-}
-
-.time-label{
-  margin-top:4px;
-  color:#aaa;
-  font-size:11px;
-}
-
-.progress-wrap{
-  margin-top:8px;
-
-  height:4px;
-
-  overflow:hidden;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.06);
-}
-
-.progress-bar{
-  width:20%;
-  height:100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      #5c0000,
-      #ff2a2a,
-      #ff9999);
-
-  animation:move 1.8s linear infinite;
-}
-
-/* MAIN */
-
-.main-layout{
-  display:grid;
-  grid-template-columns:1fr 280px;
-  height:calc(100vh - 170px);
-}
-
-.sheet-area{
-  background:#fff;
-  overflow:hidden;
-  position:relative;
-}
-
-.sheet-area iframe{
-
-  position:absolute;
-
-  left:50%;
-  top:-82px;
-
-  width:138%;
-  height:152%;
-
-  border:none;
-
-  transform:
-    translateX(-50%)
-    scale(.71);
-
-  transform-origin:top center;
-}
-/* SIDEBAR */
-
-.sidebar{
-  background:#0d0d0d;
-
-  border-right:1px solid rgba(255,255,255,.08);
-
-  display:flex;
-  flex-direction:column;
-
-  gap:12px;
-
-  padding:10px;
-}
-
-.widget{
-  background:rgba(255,255,255,.03);
-
-  border:1px solid rgba(255,255,255,.07);
-
-  border-radius:18px;
-
-  padding:14px;
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,.28);
-}
-
-.widget-title{
-  color:#ffcc00;
-
-  font-size:17px;
-
-  font-weight:800;
-
-  margin-bottom:12px;
-}
-
-.status-item{
-  display:flex;
-  justify-content:space-between;
-
-  padding-bottom:10px;
-
-  margin-bottom:10px;
-
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.badge{
-  padding:4px 10px;
-
-  border-radius:999px;
-
-  font-size:12px;
-
-  font-weight:700;
-}
-
-.green{
-  background:#123b12;
-  color:#7dff7d;
-}
-
-.orange{
-  background:#4a3200;
-  color:#ffd66b;
-}
-
-.red{
-  background:#4a0000;
-  color:#ff9d9d;
-}
-
-.progress-number{
-  font-size:56px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-
-/* BREAKING */
-
-.breaking{
-  position:absolute;
-
-  top:106px;
-  left:50%;
-
-  transform:translateX(-50%);
-
-  background:#c40000;
-
-  color:white;
-
-  padding:12px 28px;
-
-  border-radius:999px;
-
-  font-size:20px;
-
-  font-weight:900;
-
-  z-index:99;
-
-  display:none;
-
-  box-shadow:
-    0 0 35px rgba(255,0,0,.5);
-
-  animation:blink .7s infinite alternate;
-}
-
-/* TICKER */
-
-.ticker-wrap{
-  position:fixed;
-
-  bottom:0;
-  right:0;
-  left:0;
-
-  height:70px;
-
-  background:#050505f0;
-
-  border-top:1px solid rgba(255,255,255,.08);
-
-  display:flex;
-
-  align-items:center;
-
-  overflow:hidden;
-
-  z-index:80;
-}
-
-.ticker-label{
-  height:100%;
-
-  background:#c40000;
-
-  display:flex;
-  align-items:center;
-
-  padding:0 24px;
-
-  font-size:22px;
-
-  font-weight:900;
-
-  white-space:nowrap;
-}
-
-.ticker-track{
-  display:flex;
-
-  white-space:nowrap;
-
-  padding-right:100%;
-
-  animation:ticker var(--ticker-speed) linear infinite;
-}
-
-.news-item{
-  display:flex;
-  align-items:center;
-
-  font-size:26px;
-
-  padding:0 36px;
-}
-
-.news-time{
-  color:#ffcc00;
-
-  font-family:Consolas;
-
-  font-weight:900;
-
-  margin-left:14px;
-}
-
-/* WEATHER */
-
-.weather-temp{
-  font-size:42px;
-  font-weight:900;
-}
-
-.small{
-  color:#aaa;
-  font-size:14px;
-}
-
-/* ANIMATIONS */
-
-@keyframes ticker{
-  from{transform:translateX(0)}
-  to{transform:translateX(100%)}
-}
-
-@keyframes pulse{
-  from{transform:scale(1)}
-  to{transform:scale(1.006)}
-}
-
-@keyframes move{
-  from{transform:translateX(-140%)}
-  to{transform:translateX(600%)}
-}
-
-@keyframes blink{
-  from{opacity:.65}
-  to{opacity:1}
-}
-
-.flash{
-  animation:screenFlash .35s;
-}
-
-@keyframes screenFlash{
-  0%{background:#ff0000;}
-  100%{background:transparent;}
-}
-
+  :root {
+    --bg-color: #070707;
+    --header-bg: rgba(10, 10, 10, 0.92);
+    --accent-color: #ffcc00;
+    --danger-color: #ff2a2a;
+    --text-soft: #cfcfcf;
+    --ticker-speed: 30s;
+
+    /* גודל והתאמת השיטס */
+    --sheet-scale: 0.82;
+    --sheet-expand: 122%;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: white;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,0,0,0.10) 0%, rgba(255,0,0,0.02) 18%, rgba(0,0,0,0) 42%),
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0) 35%),
+      linear-gradient(180deg, #121212 0%, #080808 100%);
+  }
+
+  .header {
+    height: 120px;
+    background: rgba(10, 10, 10, 0.92);
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: 260px 1fr 150px;
+    align-items: center;
+    gap: 20px;
+    padding: 8px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    z-index: 10;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-logo {
+    max-width: 210px;
+    max-height: 70px;
+    object-fit: contain;
+  }
+
+  .center-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .deadline-panel {
+    width: min(900px, 100%);
+    padding: 10px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+      linear-gradient(135deg, rgba(70,0,0,0.42), rgba(0,0,0,0.78));
+  }
+
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(95px, 1fr));
+    gap: 8px;
+  }
+
+  .time-box {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 7px 6px 6px;
+    text-align: center;
+  }
+
+  .time-value {
+    font-family: Consolas, monospace;
+    font-weight: 900;
+    font-size: 42px;
+    color: #fff;
+  }
+
+  .time-label {
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+
+  .header-right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .clock-box {
+    min-width: 118px;
+    padding: 7px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+
+  .clock {
+    font-family: Consolas, monospace;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent-color);
+  }
+
+  .sheet-container {
+    height: calc(100vh - 190px);
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sheet-frame {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: white;
+  }
+
+  .sheet-frame iframe {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: var(--sheet-expand);
+    height: var(--sheet-expand);
+    border: none;
+    background: white;
+    transform: translateX(-50%) scale(var(--sheet-scale));
+    transform-origin: top center;
+  }
+
+  .ticker-wrap {
+    height: 70px;
+    background: rgba(8,8,8,0.96);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+
+  .ticker-label {
+    background: #c40000;
+    color: white;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 22px;
+    white-space: nowrap;
+  }
+
+  .ticker-nav {
+    display: flex;
+    white-space: nowrap;
+    padding-right: 100%;
+    animation: scroll-it var(--ticker-speed) linear infinite;
+  }
+
+  .news-item {
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+    font-weight: 500;
+    padding: 0 36px;
+  }
+
+  .news-time {
+    color: var(--accent-color);
+    font-weight: 800;
+    margin-left: 12px;
+    font-family: Consolas, monospace;
+  }
+
+  @keyframes scroll-it {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
 </style>
 </head>
 
 <body>
 
-<div class="breaking" id="breakingBanner">
-⚡ מבזק חם התקבל
-</div>
-
 <div class="header">
 
-  <div class="logo-wrap">
-
+  <div class="brand">
     <img
+      class="brand-logo"
       src="לוגו בקהילה וקטורי.jpg"
-      class="logo-img">
-
+      alt="בקהילה"
+    >
   </div>
 
   <div class="center-zone">
-
     <div class="deadline-panel">
-
-      <div class="deadline-title">
-        ⏳ ספירה לאחור לסגירת הגיליון
-      </div>
 
       <div class="countdown-grid">
 
         <div class="time-box">
-          <div class="time-value" id="days">00</div>
+          <div id="days" class="time-value">00</div>
           <div class="time-label">ימים</div>
         </div>
 
         <div class="time-box">
-          <div class="time-value" id="hours">00</div>
+          <div id="hours" class="time-value">00</div>
           <div class="time-label">שעות</div>
         </div>
 
         <div class="time-box">
-          <div class="time-value" id="minutes">00</div>
+          <div id="minutes" class="time-value">00</div>
           <div class="time-label">דקות</div>
         </div>
 
         <div class="time-box">
-          <div class="time-value" id="seconds">00</div>
+          <div id="seconds" class="time-value">00</div>
           <div class="time-label">שניות</div>
         </div>
 
       </div>
-
-      <div class="progress-wrap">
-        <div class="progress-bar"></div>
-      </div>
-
     </div>
-
   </div>
 
-  <div class="clock-box">
-    <div class="clock" id="clock">00:00:00</div>
+  <div class="header-right">
+    <div class="clock-box">
+      <div id="clock" class="clock">00:00:00</div>
+    </div>
   </div>
 
 </div>
 
-<div class="main-layout">
+<div class="sheet-container">
+  <div class="sheet-frame">
 
-  <div class="sheet-area">
-
+    <!-- השיטס המעודכן -->
     <iframe
       id="sheetFrame"
       src="https://docs.google.com/spreadsheets/d/1f7LRkcTDvvonP5Ea7F-mg2hozFyhbFDLtdC476h_kJI/preview?gid=1602259236">
     </iframe>
 
   </div>
-
-  <div class="sidebar">
-
-    <div class="widget">
-
-      <div class="widget-title">
-        📊 סטטוס מערכת
-      </div>
-
-      <div class="status-item">
-        <span>כתבים</span>
-        <span class="badge green">פעיל</span>
-      </div>
-
-      <div class="status-item">
-        <span>גרפיקה</span>
-        <span class="badge orange">עומס</span>
-      </div>
-
-      <div class="status-item">
-        <span>דפוס</span>
-        <span class="badge red">ממתין</span>
-      </div>
-
-    </div>
-
-    <div class="widget">
-
-      <div class="widget-title">
-        📈 מצב סגירת גיליון
-      </div>
-
-      <div
-        class="progress-number"
-        id="progressPercent">
-
-        68%
-
-      </div>
-
-      <div
-        id="systemLevel"
-        class="badge orange">
-
-        לקראת סגירה
-
-      </div>
-
-    </div>
-
-    <div class="widget">
-
-      <div class="widget-title">
-        🌤 מזג אוויר ירושלים
-      </div>
-
-      <div
-        class="weather-temp"
-        id="weatherTemp">
-
-        25°
-
-      </div>
-
-      <div class="small">
-        שמיים בהירים
-      </div>
-
-    </div>
-
-    <div class="widget">
-
-      <div class="widget-title">
-        ⚡ עומס חדשות
-      </div>
-
-      <div style="
-        font-size:40px;
-        font-weight:900;
-        color:#ff4444">
-
-        HIGH
-
-      </div>
-
-      <div class="small">
-        15 מבזקים אחרונים
-      </div>
-
-    </div>
-
-  </div>
-
 </div>
 
 <div class="ticker-wrap">
@@ -658,250 +276,165 @@ body{
     מבזקי רוטר
   </div>
 
-  <div
-    class="ticker-track"
-    id="tickerTrack">
-
-    <div class="news-item">
-      טוען חדשות...
-    </div>
-
+  <div id="ticker" class="ticker-nav">
+    <span class="news-item">טוען מבזקים אחרונים...</span>
   </div>
 
 </div>
 
 <script>
 
-function updateClock(){
+const SHEET_BASE_URL =
+"https://docs.google.com/spreadsheets/d/1f7LRkcTDvvonP5Ea7F-mg2hozFyhbFDLtdC476h_kJI/preview?gid=1602259236";
+
+function pad(num) {
+  return String(num).padStart(2, '0');
+}
+
+function updateClock() {
 
   const now = new Date();
 
-  document.getElementById('clock').innerText =
-    now.toLocaleTimeString('he-IL',{
-
-      hour:'2-digit',
-      minute:'2-digit',
-      second:'2-digit',
-      hour12:false
+  document.getElementById("clock").innerText =
+    now.toLocaleTimeString('he-IL', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
     });
+
 }
 
-function pad(n){
-  return String(n).padStart(2,'0');
-}
+function updateCountdown() {
 
-function updateCountdown(){
-
-  const target =
-    new Date('2026-05-27T15:00:00+03:00');
+  const targetDate = new Date('2026-05-06T15:00:00+03:00');
 
   const now = new Date();
 
-  const diff = target - now;
+  const diff = targetDate - now;
 
-  if(diff <= 0){
+  if (diff <= 0) {
     return;
   }
 
-  const total = Math.floor(diff/1000);
+  const totalSeconds = Math.floor(diff / 1000);
 
-  const days = Math.floor(total/86400);
+  const days = Math.floor(totalSeconds / 86400);
 
-  const hours = Math.floor((total%86400)/3600);
+  const hours =
+    Math.floor((totalSeconds % 86400) / 3600);
 
-  const minutes = Math.floor((total%3600)/60);
+  const minutes =
+    Math.floor((totalSeconds % 3600) / 60);
 
-  const seconds = total%60;
+  const seconds =
+    totalSeconds % 60;
 
-  document.getElementById('days').innerText = pad(days);
-  document.getElementById('hours').innerText = pad(hours);
-  document.getElementById('minutes').innerText = pad(minutes);
-  document.getElementById('seconds').innerText = pad(seconds);
+  document.getElementById("days").innerText = pad(days);
+  document.getElementById("hours").innerText = pad(hours);
+  document.getElementById("minutes").innerText = pad(minutes);
+  document.getElementById("seconds").innerText = pad(seconds);
+
 }
 
-let previousHeadline = '';
+function refreshSheet() {
 
-async function loadNews(){
+  const iframe =
+    document.getElementById("sheetFrame");
 
-  const RSS =
-    'https://rotter.net/rss/rotternews.xml';
+  iframe.src =
+    SHEET_BASE_URL + "&t=" + Date.now();
 
-  const PROXY =
-    'https://corsproxy.io/?' +
-    encodeURIComponent(RSS);
+}
 
-  try{
+async function loadNews() {
 
-    const response = await fetch(PROXY);
+  const RSS_URL =
+    "https://rotter.net/rss/rotternews.xml";
+
+  const PROXY_URL =
+    "https://corsproxy.io/?" +
+    encodeURIComponent(
+      RSS_URL + "?t=" + Date.now()
+    );
+
+  try {
+
+    const response =
+      await fetch(PROXY_URL);
 
     const buffer =
       await response.arrayBuffer();
 
     const decoder =
-      new TextDecoder('windows-1255');
+      new TextDecoder("windows-1255");
 
     const text =
       decoder.decode(buffer);
 
-    const parser = new DOMParser();
+    const parser =
+      new DOMParser();
 
-    const xml =
-      parser.parseFromString(
-        text,
-        'text/xml');
+    const xmlDoc =
+      parser.parseFromString(text, "text/xml");
 
     const items =
-      xml.querySelectorAll('item');
+      xmlDoc.querySelectorAll("item");
 
-    let html = '';
+    let newsHtml = "";
 
-    items.forEach((item,index)=>{
+    items.forEach((item, index) => {
 
-      if(index < 15){
+      if (index < 15) {
 
         const title =
-          item.querySelector('title')
-          ?.textContent || '';
+          item.querySelector("title")?.textContent || "";
 
         const pubDate =
-          item.querySelector('pubDate')
-          ?.textContent || '';
+          item.querySelector("pubDate")?.textContent || "";
 
         const dateObj =
           new Date(pubDate);
 
-        const time =
+        const timeStr =
           isNaN(dateObj)
-            ? ''
-            : dateObj.toLocaleTimeString(
-                'he-IL',
-                {
-                  hour:'2-digit',
-                  minute:'2-digit',
-                  hour12:false
-                });
+            ? ""
+            : dateObj.toLocaleTimeString("he-IL", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+              });
 
-        html += `
+        newsHtml += `
           <div class="news-item">
-
-            <span class="news-time">
-              ${time}
-            </span>
-
-            <span>
-              ${title}
-            </span>
-
+            <span class="news-time">${timeStr}</span>
+            <span>${title}</span>
           </div>
         `;
+
       }
+
     });
 
-    document.getElementById(
-      'tickerTrack'
-    ).innerHTML = html;
+    document.getElementById("ticker").innerHTML =
+      newsHtml;
 
-    const firstHeadline =
-      items[0]
-      ?.querySelector('title')
-      ?.textContent || '';
+  } catch (error) {
 
-    if(
-      previousHeadline &&
-      previousHeadline !== firstHeadline
-    ){
+    console.error(error);
 
-      triggerBreaking(firstHeadline);
-
-      playAlert();
-
-      if(
-        firstHeadline.includes('פיגוע') ||
-        firstHeadline.includes('חוסל') ||
-        firstHeadline.includes('אזעק')
-      ){
-
-        document.body.classList.add('flash');
-
-        setTimeout(()=>{
-          document.body.classList.remove('flash');
-        },400);
-      }
-    }
-
-    previousHeadline = firstHeadline;
-
-  }catch(e){
-    console.log(e);
   }
-}
 
-function triggerBreaking(text){
-
-  const banner =
-    document.getElementById(
-      'breakingBanner');
-
-  banner.innerText =
-    '⚡ ' + text;
-
-  banner.style.display = 'block';
-
-  setTimeout(()=>{
-    banner.style.display = 'none';
-  },10000);
-}
-
-function playAlert(){
-
-  try{
-
-    const audio =
-      new Audio(
-        'https://actions.google.com/sounds/v1/alarms/beep_short.ogg'
-      );
-
-    audio.volume = .25;
-
-    audio.play();
-
-  }catch(e){}
-}
-
-function refreshSheet(){
-
-  document.getElementById(
-    'sheetFrame'
-  ).src =
-
-    'https://docs.google.com/spreadsheets/d/1f7LRkcTDvvonP5Ea7F-mg2hozFyhbFDLtdC476h_kJI/preview?gid=1602259236&t='
-    + Date.now();
-}
-
-function fakeWeather(){
-
-  const temps = [24,25,26,27,28];
-
-  const t =
-    temps[
-      Math.floor(
-        Math.random()*temps.length)];
-
-  document.getElementById(
-    'weatherTemp'
-  ).innerText = t + '°';
 }
 
 updateClock();
 updateCountdown();
 loadNews();
-fakeWeather();
 
-setInterval(updateClock,1000);
-setInterval(updateCountdown,1000);
-setInterval(loadNews,120000);
-setInterval(refreshSheet,90000);
-setInterval(fakeWeather,300000);
+setInterval(updateClock, 1000);
+setInterval(updateCountdown, 1000);
+setInterval(loadNews, 120000);
+setInterval(refreshSheet, 20000);
 
 </script>
 
